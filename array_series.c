@@ -46,7 +46,7 @@ int check_increasing(int arr[], int i)
 
 int check_decreasing(int arr[], int i)
 {
-    return (arr[i] >= arr[i - 1]);
+    return (arr[i] > arr[i - 1]);
 }
 
 /*------------------------------------------------------
