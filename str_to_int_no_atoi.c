@@ -1,6 +1,6 @@
 /*------------------------------------------------------
-* Filename: str_to_int_atoi.c
-* Description: Convert an str to int and add 36 to it using atoi.
+* Filename: str_to_int_no_atoi.c
+* Description: Convert an str to int and add 36 to it without using atoi.
 * Author: Gershon Levy
 -------------------------------------------------------*/
 
@@ -11,12 +11,16 @@
 #define MAX_SIZE 100
 #define ZERO '0'
 #define NOT_A_NUM_ERR -1
+#define FALSE 0
+#define TRUE 1
 
 int main()
 {
     char str[MAX_SIZE];
-    int num;
+    int num = 0;
     int size = 0;
+    int minus = FALSE;
+    int i = 0;
 
     str[0] = fgetc(stdin);
 
@@ -39,12 +43,32 @@ int main()
         }
     }
 
-    // convert the num (it will always be valid bc of the check we did in the while)
-    num = atoi(str);
+    // check if the number is negative
+    if (str[0] == '-')
+    {
+        minus = TRUE;
+        ++i;
+    }
+
+    for (; i < size; ++i)
+    {
+        str[i] -= ZERO;
+        // make room for next number (e.g turn 12 into 120 so we could add 3 and get 123)
+        num *= 10;
+
+        // add next number if num is negative then do subtraction instead of addition
+        if (minus == TRUE)
+        {
+            num -= str[i];
+        }
+        // add next num (for positives)
+        else
+        {
+            num += str[i];
+        }
+    }
 
     num += 36;
 
     printf("%d", num);
-
-    return 0;
 }
